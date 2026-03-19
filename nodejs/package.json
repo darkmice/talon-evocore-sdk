@@ -1,0 +1,32 @@
+{
+  "name": "talon-evocore",
+  "version": "0.1.0",
+  "description": "Talon EvoCore — 两行代码，赋予 AI 进化的灵魂。会记忆、会学习、会生长的 AI 运行时。",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "keywords": ["ai", "brain", "evolution", "talon", "agent", "memory", "rag"],
+  "license": "Commercial",
+  "author": "Talon Contributors",
+  "homepage": "https://github.com/darkmice/talon-evocore-sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darkmice/talon-evocore-sdk.git",
+    "directory": "nodejs"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "scripts/",
+    "native/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "koffi": "^2.9.0"
+  }
+}

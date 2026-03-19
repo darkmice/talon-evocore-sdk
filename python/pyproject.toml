@@ -1,0 +1,32 @@
+#
+# Copyright (c) 2026 Talon Contributors
+# Author: dark.lijin@gmail.com
+# Licensed under the Talon Community Dual License Agreement.
+# See the LICENSE file in the project root for full license information.
+#
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "talon-evocore"
+version = "0.1.0"
+description = "Talon EvoCore — AI 自进化运行时。会记忆、会学习、会生长。"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "Commercial"}
+keywords = ["ai", "brain", "evolution", "talon", "agent", "memory"]
+authors = [{name = "Talon Contributors"}]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/darkmice/talon-evocore-sdk"
+
+[tool.setuptools.packages.find]
+include = ["talon_evocore*"]

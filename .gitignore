@@ -1,0 +1,28 @@
+# Build artifacts
+/target/
+*/target/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.class
+bin/
+obj/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Native libraries (downloaded at install time)
+nodejs/native/
+python/talon_evocore/native/
+php/native/
+
+# Lock files (each SDK manages its own)
+Cargo.lock

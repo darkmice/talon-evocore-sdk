@@ -1,0 +1,16 @@
+{
+    "name": "talon/evocore",
+    "description": "Talon EvoCore — AI 自进化运行时 PHP SDK",
+    "type": "library",
+    "license": "proprietary",
+    "version": "0.1.0",
+    "require": {
+        "php": ">=8.1",
+        "ext-ffi": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Talon\\EvoCore\\": "src/"
+        }
+    }
+}

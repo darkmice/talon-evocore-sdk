@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>Talon.EvoCore</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Talon Contributors</Authors>
+    <Description>Talon EvoCore — AI 自进化运行时 .NET SDK</Description>
+    <PackageLicenseExpression>LicenseRef-Commercial</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/darkmice/talon-evocore-sdk</RepositoryUrl>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+</Project>
