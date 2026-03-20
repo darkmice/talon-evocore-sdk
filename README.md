@@ -50,7 +50,6 @@ EvoCore 是闭源产品。SDK 通过 FFI 调用预编译的原生库 (`libevocor
 | Node.js | `nodejs/` | npm | koffi |
 | Go | `go/` | go modules | CGO |
 | Python | `python/` | pip | ctypes |
-| Rust | `rust/` | cargo | 原生依赖 |
 | PHP | `php/` | composer | FFI ext |
 | .NET | `dotnet/` | NuGet | P/Invoke |
 | Java | `java/` | Maven | JNA |

@@ -120,6 +120,111 @@ class EvoCore {
     return this._exec('recall_evolution_memory', { query, top_k: topK });
   }
 
+  // ── Soul 操作 ──────────────────────────────────────────
+
+  /**
+   * 配置 Soul — 设置身份、个性、边界等灵魂参数。
+   * @param {Object} soul - Soul 配置
+   */
+  configureSoul(soul) {
+    this._exec('configure_soul', { soul });
+  }
+
+  /**
+   * 获取当前 Soul。
+   * @returns {Object} Soul 对象
+   */
+  getSoul() {
+    return this._exec('get_soul', {});
+  }
+
+  /**
+   * 确认/拒绝 Soul 进化提议。
+   * @param {number} version - 提议版本号
+   * @param {boolean} [accept=true] - 是否接受
+   * @returns {boolean} 是否处理成功
+   */
+  evolveSoul(version, accept = true) {
+    const result = this._exec('evolve_soul', { version, accept });
+    return result.processed || false;
+  }
+
+  /**
+   * 手动触发自省。
+   * @returns {Object} 自省报告
+   */
+  introspect() {
+    return this._exec('introspect', {});
+  }
+
+  /**
+   * 心跳 — 建议每 5 分钟调用一次。
+   * @returns {Object} 心跳结果
+   */
+  heartbeat() {
+    return this._exec('heartbeat', {});
+  }
+
+  // ── 认知模块操作 ──────────────────────────────────────
+
+  /**
+   * 非阻塞轮询意图 — 获取大脑的自发想法。
+   *
+   * @param {number} [maxCount=10] - 最多拉取数量
+   * @returns {Object[]} 意图列表
+   *
+   * @example
+   * const intents = evo.pollIntents();
+   * for (const intent of intents) {
+   *   if (intent.Explore) {
+   *     const { id, topic, reason } = intent.Explore;
+   *     // 执行探索任务，然后回传结果
+   *     evo.feedExplorationResult(id, 'findings here');
+   *   }
+   * }
+   */
+  pollIntents(maxCount = 10) {
+    const result = this._exec('poll_intents', { max_count: maxCount });
+    return result.intents || [];
+  }
+
+  /**
+   * 向大脑投喂观察数据。
+   * @param {string} domain - 领域
+   * @param {string} content - 观察内容
+   * @param {Object} [metadata] - 元数据
+   */
+  feedObservation(domain, content, metadata = {}) {
+    this._exec('feed_sensory', {
+      input: { type: 'observation', domain, content, metadata }
+    });
+  }
+
+  /**
+   * 回传探索结果 — 完成好奇心闭环。
+   * @param {string} intentId - 对应的意图 ID
+   * @param {string} findings - 探索发现
+   * @param {boolean} [hypothesisConfirmed] - 假设是否验证
+   */
+  feedExplorationResult(intentId, findings, hypothesisConfirmed = null) {
+    this._exec('feed_sensory', {
+      input: {
+        type: 'exploration_result',
+        intent_id: intentId,
+        findings,
+        hypothesis_confirmed: hypothesisConfirmed
+      }
+    });
+  }
+
+  /**
+   * 获取认知状态快照。
+   * @returns {{ consciousness: string, total_inputs: number, last_input_ms_ago: number, learn_count: number, domain_count: number }}
+   */
+  cognitiveState() {
+    return this._exec('get_cognitive_state', {});
+  }
+
   /**
    * 关闭实例。
    */

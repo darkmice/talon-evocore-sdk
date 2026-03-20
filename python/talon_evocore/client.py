@@ -89,6 +89,91 @@ class EvoCore:
         """召回进化记忆。"""
         return self._exec("recall_evolution_memory", {"query": query, "top_k": top_k})
 
+    # ── Soul 操作 ──────────────────────────────────────────
+
+    def configure_soul(self, soul: Dict[str, Any]) -> None:
+        """配置 Soul — 设置身份、个性、边界等灵魂参数。"""
+        self._exec("configure_soul", {"soul": soul})
+
+    def get_soul(self) -> Dict[str, Any]:
+        """获取当前 Soul。"""
+        return self._exec("get_soul", {})
+
+    def evolve_soul(self, version: int, accept: bool = True) -> bool:
+        """确认/拒绝 Soul 进化提议。"""
+        result = self._exec("evolve_soul", {"version": version, "accept": accept})
+        return result.get("processed", False)
+
+    def introspect(self) -> Dict[str, Any]:
+        """手动触发自省。"""
+        return self._exec("introspect", {})
+
+    def heartbeat(self) -> Dict[str, Any]:
+        """心跳 — 建议每 5 分钟调用一次。"""
+        return self._exec("heartbeat", {})
+
+    # ── 认知模块操作 ──────────────────────────────────────
+
+    def poll_intents(self, max_count: int = 10) -> List[Dict[str, Any]]:
+        """非阻塞轮询意图 — 获取大脑的自发想法。
+
+        返回意图列表，每个意图有 type 字段标识类型：
+        - Explore: 好奇心探索请求
+        - Verify: 假设验证请求
+        - EpiphanyDiscovered: 顿悟通知
+        - SoulAmendmentProposal: 灵魂修正提案
+
+        Example::
+
+            intents = evo.poll_intents()
+            for intent in intents:
+                if intent.get('Explore'):
+                    topic = intent['Explore']['topic']
+                    # 执行探索，然后回传结果
+                    evo.feed_exploration_result(intent['Explore']['id'], findings='...')
+        """
+        result = self._exec("poll_intents", {"max_count": max_count})
+        return result.get("intents", [])
+
+    def feed_observation(
+        self,
+        domain: str,
+        content: str,
+        metadata: Optional[Dict[str, str]] = None,
+    ) -> None:
+        """向大脑投喂观察数据。"""
+        self._exec("feed_sensory", {
+            "input": {
+                "type": "observation",
+                "domain": domain,
+                "content": content,
+                "metadata": metadata or {},
+            }
+        })
+
+    def feed_exploration_result(
+        self,
+        intent_id: str,
+        findings: str,
+        hypothesis_confirmed: Optional[bool] = None,
+    ) -> None:
+        """回传探索结果 — 完成好奇心闭环。"""
+        self._exec("feed_sensory", {
+            "input": {
+                "type": "exploration_result",
+                "intent_id": intent_id,
+                "findings": findings,
+                "hypothesis_confirmed": hypothesis_confirmed,
+            }
+        })
+
+    def cognitive_state(self) -> Dict[str, Any]:
+        """获取认知状态快照。
+
+        Returns dict with: consciousness, total_inputs, last_input_ms_ago, learn_count, domain_count
+        """
+        return self._exec("get_cognitive_state", {})
+
     def close(self):
         """关闭实例。"""
         if self._id is not None:

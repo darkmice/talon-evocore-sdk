@@ -104,6 +104,79 @@ func (e *EvoCore) EvolutionReport(slowThresholdMs int64) (json.RawMessage, error
 	return e.execute("evolution_report", map[string]interface{}{"slow_threshold_ms": slowThresholdMs})
 }
 
+// ── Soul 操作 ──────────────────────────────────────────────
+
+// ConfigureSoul 配置灵魂。
+func (e *EvoCore) ConfigureSoul(soul interface{}) error {
+	_, err := e.execute("configure_soul", map[string]interface{}{"soul": soul})
+	return err
+}
+
+// GetSoul 获取当前灵魂。
+func (e *EvoCore) GetSoul() (json.RawMessage, error) {
+	return e.execute("get_soul", nil)
+}
+
+// EvolveSoul 确认/拒绝灵魂进化提议。
+func (e *EvoCore) EvolveSoul(version int, accept bool) (json.RawMessage, error) {
+	return e.execute("evolve_soul", map[string]interface{}{"version": version, "accept": accept})
+}
+
+// Introspect 手动触发自省。
+func (e *EvoCore) Introspect() (json.RawMessage, error) {
+	return e.execute("introspect", nil)
+}
+
+// Heartbeat 心跳 — 建议每 5 分钟调用一次。
+func (e *EvoCore) Heartbeat() (json.RawMessage, error) {
+	return e.execute("heartbeat", nil)
+}
+
+// ── 认知模块操作 ──────────────────────────────────────────
+
+// PollIntents 非阻塞轮询意图 — 获取大脑的自发想法。
+//
+// 返回意图列表（JSON），每个意图带类型标签：
+// Explore, Verify, EpiphanyDiscovered, SoulAmendmentProposal 等。
+func (e *EvoCore) PollIntents(maxCount int) (json.RawMessage, error) {
+	return e.execute("poll_intents", map[string]interface{}{"max_count": maxCount})
+}
+
+// FeedObservation 向大脑投喂观察数据。
+func (e *EvoCore) FeedObservation(domain, content string, metadata map[string]string) error {
+	if metadata == nil {
+		metadata = map[string]string{}
+	}
+	_, err := e.execute("feed_sensory", map[string]interface{}{
+		"input": map[string]interface{}{
+			"type":     "observation",
+			"domain":   domain,
+			"content":  content,
+			"metadata": metadata,
+		},
+	})
+	return err
+}
+
+// FeedExplorationResult 回传探索结果 — 完成好奇心闭环。
+func (e *EvoCore) FeedExplorationResult(intentID, findings string, hypothesisConfirmed *bool) error {
+	input := map[string]interface{}{
+		"type":      "exploration_result",
+		"intent_id": intentID,
+		"findings":  findings,
+	}
+	if hypothesisConfirmed != nil {
+		input["hypothesis_confirmed"] = *hypothesisConfirmed
+	}
+	_, err := e.execute("feed_sensory", map[string]interface{}{"input": input})
+	return err
+}
+
+// CognitiveState 获取认知状态快照。
+func (e *EvoCore) CognitiveState() (json.RawMessage, error) {
+	return e.execute("get_cognitive_state", nil)
+}
+
 // Close 关闭实例。
 func (e *EvoCore) Close() {
 	if e.id != 0 {

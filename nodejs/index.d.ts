@@ -79,6 +79,90 @@ export interface EvoConfig {
   };
 }
 
+// ── Soul 类型 ──────────────────────────────────────────────
+
+export interface Soul {
+  identity: SoulIdentity;
+  core_truths: CoreTruth[];
+  boundaries: string[];
+  vibe: 'Sharp' | 'Warm' | 'Chaotic' | 'Calm';
+  continuity: ContinuityConfig;
+  evolution: SoulEvolutionHistory;
+}
+
+export interface SoulIdentity {
+  name: string;
+  personality_type: 'Professional' | 'Creative' | 'Balanced' | 'Hacker';
+  comm_style: 'Concise' | 'Detailed' | 'Casual' | 'Adaptive';
+  mission: string;
+  emoji?: string;
+}
+
+export interface CoreTruth {
+  principle: string;
+  weight?: number;
+}
+
+export interface ContinuityConfig {
+  introspect_every_n?: number;
+  metacognition?: 'Passive' | 'Active';
+}
+
+export interface SoulEvolutionHistory {
+  version: number;
+  accepted: SoulEvolutionRecord[];
+}
+
+export interface SoulEvolutionRecord {
+  version: number;
+  reason: string;
+  changes: string[];
+  timestamp: number;
+}
+
+export interface IntrospectionReport {
+  success_rate: number;
+  drift_from_soul: [string, number][];
+  total_learns: number;
+  timestamp: number;
+}
+
+export interface HeartbeatResult {
+  introspected: boolean;
+  introspection?: IntrospectionReport;
+  new_proposal?: SoulEvolutionProposal;
+  pending_proposals: number;
+  timestamp: number;
+}
+
+export interface SoulEvolutionProposal {
+  proposed_version: number;
+  reason: string;
+  proposed_changes: Array<{
+    dimension: string;
+    old_bias: number;
+    current_value: number;
+    drift: number;
+  }>;
+  timestamp: number;
+  status: 'Pending' | 'Accepted' | 'Rejected';
+}
+
+// ── 认知模块类型 ──────────────────────────────────────────
+
+export interface EvoIntent {
+  /** 意图类型枚举标签（Explore / Verify / EpiphanyDiscovered / ...） */
+  [type: string]: any;
+}
+
+export interface CognitiveStateSnapshot {
+  consciousness: 'Awake' | 'Drowsy' | 'Dreaming';
+  total_inputs: number;
+  last_input_ms_ago: number;
+  learn_count: number;
+  domain_count: number;
+}
+
 export declare class EvoCore {
   constructor(dbPath: string, config?: EvoConfig);
   learn(input: LearningInput): LearningResult;
@@ -88,5 +172,19 @@ export declare class EvoCore {
   evolutionReport(slowThresholdMs?: number): EvolutionReport;
   storeEvolutionMemory(content: string, domain: string, ttlSecs?: number): { id: number };
   recallEvolutionMemory(query: string, topK?: number): { results: any[] };
+
+  // Soul 操作
+  configureSoul(soul: Soul): void;
+  getSoul(): Soul;
+  evolveSoul(version: number, accept?: boolean): boolean;
+  introspect(): IntrospectionReport;
+  heartbeat(): HeartbeatResult;
+
+  // 认知模块
+  pollIntents(maxCount?: number): EvoIntent[];
+  feedObservation(domain: string, content: string, metadata?: Record<string, string>): void;
+  feedExplorationResult(intentId: string, findings: string, hypothesisConfirmed?: boolean | null): void;
+  cognitiveState(): CognitiveStateSnapshot;
+
   close(): void;
 }
