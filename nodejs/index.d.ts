@@ -168,6 +168,12 @@ export declare class EvoCore {
   learn(input: LearningInput): LearningResult;
   recommendStrategy(signals: string[]): StrategyRecommendation;
   evolveSkill(skillName: string): MutationRecord | null;
+  llmEvolveSkill(skillName: string, currentContent: string): EvoIntent | null;
+  llmCreateSkill(domain: string, triggerSignals: string[]): EvoIntent | null;
+  llmPredictLearningCurve(skillName: string, currentLevel: number, historyData: string): any;
+  llmPlanLearningPath(targetSkills: string[], currentSkills: string[], gaps: string[]): any;
+  llmSelfReflect(statsSummary: string, recentExperiences: string): any;
+  computeExecutionParams(traits: Record<string, number>, timestamp?: number, recentShifts?: [string, number][]): any;
   personalitySnapshot(): PersonalitySnapshot;
   evolutionReport(slowThresholdMs?: number): EvolutionReport;
   storeEvolutionMemory(content: string, domain: string, ttlSecs?: number): { id: number };

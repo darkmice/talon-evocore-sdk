@@ -87,6 +87,38 @@ class EvoCore {
     return this._exec('evolve_skill', { skill_name: skillName });
   }
 
+  // ── Generative LLM ──────────────────────────────────────────
+  
+  /** 🧠 使用大模型执行生成式技能重写 */
+  llmEvolveSkill(skillName, currentContent) {
+    return this._exec('llm_evolve_skill', { skill_name: skillName, current_content: currentContent });
+  }
+
+  /** 🧠 无中生有创建全新技能 */
+  llmCreateSkill(domain, triggerSignals) {
+    return this._exec('llm_create_skill', { domain, trigger_signals: triggerSignals });
+  }
+
+  /** 🧠 预测学习曲线 */
+  llmPredictLearningCurve(skillName, currentLevel, historyData) {
+    return this._exec('llm_predict_learning_curve', { skill_name: skillName, current_level: currentLevel, history_data: historyData });
+  }
+
+  /** 🧠 规划大兵团学习路径 */
+  llmPlanLearningPath(targetSkills, currentSkills, gaps) {
+    return this._exec('llm_plan_learning_path', { target_skills: targetSkills, current_skills: currentSkills, gaps });
+  }
+
+  /** 🧠 灵魂危机后的复盘 */
+  llmSelfReflect(statsSummary, recentExperiences) {
+    return this._exec('llm_self_reflect', { stats_summary: statsSummary, recent_experiences: recentExperiences });
+  }
+
+  /** 🧠 计算受情感和性格影响的大语言模型硬执行参数 */
+  computeExecutionParams(traits, timestamp = Date.now(), recentShifts = []) {
+    return this._exec('compute_execution_params', { dimensions: traits, timestamp, recent_shifts: recentShifts });
+  }
+
   /**
    * 获取个性快照。
    * @returns {Object} 个性快照
